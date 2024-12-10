@@ -10,12 +10,15 @@ import ca.codepet.gdz.util.Locator;
 public class GameScreen implements Screen {
     protected GameRoot game = Locator.get(GameRoot.class);
 
-    public float getHeight() {
-        return Gdx.graphics.getHeight();
+    /**
+     * Clears the screen.
+     */
+    public static final void clear() {
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
     }
 
-    public void clearScreen() {
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+    public float getHeight() {
+        return Gdx.graphics.getHeight();
     }
 
     @Override
@@ -26,12 +29,13 @@ public class GameScreen implements Screen {
     @Override
     public void render(float delta) {
         // Clear the screen
-        clearScreen();
+        clear();
 
         // Begin drawing the sprites on the batch
         game.batch.begin();
 
-        game.world.render(delta); // Draw the world
+        game.stage.act();
+        game.stage.draw();
 
         // Stop drawing sprites
         game.batch.end();
